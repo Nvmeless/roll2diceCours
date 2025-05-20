@@ -8,6 +8,7 @@ import { Button, Menu } from "./components/molecules";
 import { ThemeProvider } from "styled-components";
 import { useState, useContext } from "react";
 import { Accueil, Clock, Test } from "./components/pages";
+import { Typography } from "./components/atoms";
 
 function App() {
   const nightTheme = {
@@ -42,6 +43,7 @@ function App() {
     window.matchMedia("(prefers-color-scheme: dark)").matches
   );
   const [slug, setSlug] = useState("home");
+  const [logged, setLogged] = useState(false);
   const context = useContext(NightModeContext);
   const getPageContent = () => {
     switch (slug) {
@@ -57,6 +59,29 @@ function App() {
         break;
     }
   };
+  const menu = [
+    {
+      slug: "home",
+      callBack: () => {
+        setSlug("home");
+      },
+      text: "Accueil",
+    },
+    {
+      slug: "test",
+      callBack: () => {
+        setSlug("test");
+      },
+      text: "Test",
+    },
+    {
+      slug: "clock",
+      callBack: () => {
+        setSlug("clock");
+      },
+      text: "Pendule",
+    },
+  ];
   return (
     <ThemeProvider theme={nightMode ? nightTheme : dayTheme}>
       <NightModeProvider
@@ -68,7 +93,7 @@ function App() {
         }}
       >
         <Menu.Bar>
-          <Menu.Tab
+          {/* <Menu.Tab
             callBack={() => {
               setSlug("home");
             }}
@@ -81,15 +106,28 @@ function App() {
             }}
           >
             Clock
-          </Menu.Tab>
-          <Menu.Tab
-            callBack={() => {
-              setSlug("test");
-            }}
-          >
-            Test
-          </Menu.Tab>
+          </Menu.Tab> */}
           <Button.ToggleNight></Button.ToggleNight>
+          {logged ? (
+            <>
+              <Typography.Paragraph>Bonjour Michel, </Typography.Paragraph>
+              <Button.Default
+                callBack={() => {
+                  setLogged(false);
+                }}
+              >
+                Disconnect
+              </Button.Default>
+            </>
+          ) : (
+            <Button.Default
+              callBack={() => {
+                setLogged(true);
+              }}
+            >
+              Login
+            </Button.Default>
+          )}
         </Menu.Bar>
         {slug}
         {context}
