@@ -6,9 +6,10 @@ import {
 } from "./context/NigthModeContext";
 import { Button, Menu } from "./components/molecules";
 import { ThemeProvider } from "styled-components";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Accueil, Clock, Test } from "./components/pages";
 import { Typography } from "./components/atoms";
+import Pokedex from "./components/pages/Pokedex";
 
 function App() {
   const nightTheme = {
@@ -42,9 +43,10 @@ function App() {
   const [nightMode, setNightMode] = useState(
     window.matchMedia("(prefers-color-scheme: dark)").matches
   );
-  const [slug, setSlug] = useState("home");
+  let context = useContext(NightModeContext);
+  const [slug, setSlug] = useState("pokedex");
   const [logged, setLogged] = useState(false);
-  const context = useContext(NightModeContext);
+
   const getPageContent = () => {
     switch (slug) {
       case "test":
@@ -52,6 +54,9 @@ function App() {
         break;
       case "clock":
         return <Clock></Clock>;
+        break;
+      case "pokedex":
+        return <Pokedex></Pokedex>;
         break;
       case "home":
       default:
@@ -73,10 +78,11 @@ function App() {
       text: "Pendule",
     },
     {
-      slug: "clock",
-      text: "ReAccueil",
+      slug: "pokedex",
+      text: "Pokedex !",
     },
   ];
+
   return (
     <ThemeProvider theme={nightMode ? nightTheme : dayTheme}>
       <NightModeProvider
@@ -91,6 +97,7 @@ function App() {
           {menu.map((x, i) => {
             return (
               <Menu.Tab
+                key={i}
                 callBack={() => {
                   setSlug(x.slug);
                 }}
