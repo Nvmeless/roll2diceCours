@@ -62,24 +62,19 @@ function App() {
   const menu = [
     {
       slug: "home",
-      callBack: () => {
-        setSlug("home");
-      },
       text: "Accueil",
     },
     {
       slug: "test",
-      callBack: () => {
-        setSlug("test");
-      },
       text: "Test",
     },
     {
       slug: "clock",
-      callBack: () => {
-        setSlug("clock");
-      },
       text: "Pendule",
+    },
+    {
+      slug: "clock",
+      text: "ReAccueil",
     },
   ];
   return (
@@ -93,20 +88,17 @@ function App() {
         }}
       >
         <Menu.Bar>
-          {/* <Menu.Tab
-            callBack={() => {
-              setSlug("home");
-            }}
-          >
-            Accueil
-          </Menu.Tab>
-          <Menu.Tab
-            callBack={() => {
-              setSlug("clock");
-            }}
-          >
-            Clock
-          </Menu.Tab> */}
+          {menu.map((x, i) => {
+            return (
+              <Menu.Tab
+                callBack={() => {
+                  setSlug(x.slug);
+                }}
+              >
+                {x.text}
+              </Menu.Tab>
+            );
+          })}
           <Button.ToggleNight></Button.ToggleNight>
           {logged ? (
             <>
