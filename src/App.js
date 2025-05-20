@@ -10,6 +10,7 @@ import { useState, useContext, useEffect } from "react";
 import { Accueil, Clock, Test } from "./components/pages";
 import { Typography } from "./components/atoms";
 import Pokedex from "./components/pages/Pokedex";
+import Tasks from "./components/pages/Tasks";
 
 function App() {
   const nightTheme = {
@@ -44,7 +45,7 @@ function App() {
     window.matchMedia("(prefers-color-scheme: dark)").matches
   );
   let context = useContext(NightModeContext);
-  const [slug, setSlug] = useState("pokedex");
+  const [slug, setSlug] = useState("todo");
   const [logged, setLogged] = useState(false);
 
   const getPageContent = () => {
@@ -57,6 +58,9 @@ function App() {
         break;
       case "pokedex":
         return <Pokedex></Pokedex>;
+        break;
+      case "todo":
+        return <Tasks></Tasks>;
         break;
       case "home":
       default:
@@ -81,9 +85,14 @@ function App() {
       slug: "pokedex",
       text: "Pokedex !",
     },
+    {
+      slug: "todo",
+      text: "Ma todo list",
+    },
   ];
 
   return (
+    
     <ThemeProvider theme={nightMode ? nightTheme : dayTheme}>
       <NightModeProvider
         value={{
