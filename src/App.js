@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import {
   NightModeContext,
@@ -9,8 +8,8 @@ import { ThemeProvider } from "styled-components";
 import { useState, useContext, useEffect } from "react";
 import { Accueil, Clock, Test } from "./components/pages";
 import { Typography } from "./components/atoms";
-import Pokedex from "./components/pages/Pokedex";
-import Tasks from "./components/pages/Tasks";
+import About from "./components/pages/About";
+import Classique from "./components/pages/Classique";
 
 function App() {
   const nightTheme = {
@@ -19,7 +18,7 @@ function App() {
     },
     typography: {
       subTitle: "white",
-      link: "green",
+      link: "cyan",
     },
     container: {
       primary: "black",
@@ -45,54 +44,51 @@ function App() {
     window.matchMedia("(prefers-color-scheme: dark)").matches
   );
   let context = useContext(NightModeContext);
-  const [slug, setSlug] = useState("todo");
+  const [slug, setSlug] = useState("home");
   const [logged, setLogged] = useState(false);
 
   const getPageContent = () => {
     switch (slug) {
-      case "test":
-        return <Test></Test>;
-        break;
-      case "clock":
-        return <Clock></Clock>;
-        break;
-      case "pokedex":
-        return <Pokedex></Pokedex>;
-        break;
-      case "todo":
-        return <Tasks></Tasks>;
-        break;
       case "home":
-      default:
         return <Accueil></Accueil>;
-        break;
+      case "classique":
+        return <Classique></Classique>;
+      case "image":
+        return <img src="https://picsum.photos/200/300" alt="random" />;
+      case "about":
+        return <About></About>;
     }
   };
   const menu = [
     {
-      slug: "home",
-      text: "Accueil",
+      slug: "classique",
+      text: "Classique",
+    },
+    {
+      slug: "image",
+      text: "Image",
     },
     {
       slug: "test",
       text: "Test",
     },
+  ];
+  const sousMenu = [
     {
-      slug: "clock",
-      text: "Pendule",
+      slug: "about",
+      text: "About",
     },
     {
-      slug: "pokedex",
-      text: "Pokedex !",
+      slug: "contact",
+      text: "Contact",
     },
     {
-      slug: "todo",
-      text: "Ma todo list",
+      slug: "help",
+      text: "Help",
     },
   ];
 
   return (
-    
     <ThemeProvider theme={nightMode ? nightTheme : dayTheme}>
       <NightModeProvider
         value={{
@@ -118,7 +114,7 @@ function App() {
           <Button.ToggleNight></Button.ToggleNight>
           {logged ? (
             <>
-              <Typography.Paragraph>Bonjour Michel, </Typography.Paragraph>
+              <Typography.Paragraph>Bonjour Michel</Typography.Paragraph>
               <Button.Default
                 callBack={() => {
                   setLogged(false);
@@ -137,8 +133,20 @@ function App() {
             </Button.Default>
           )}
         </Menu.Bar>
-        {slug}
-        {context}
+        <Menu.SousMenu>
+          {sousMenu.map((x, i) => {
+            return (
+              <Menu.Tab
+                key={i}
+                callBack={() => {
+                  setSlug(x.slug);
+                }}
+              >
+                {x.text}
+              </Menu.Tab>
+            );
+          })}
+        </Menu.SousMenu>
         {getPageContent()}
       </NightModeProvider>
     </ThemeProvider>
