@@ -7,7 +7,7 @@ import { Button, Menu } from "./components/molecules";
 import { ThemeProvider } from "styled-components";
 import { useState, useContext, useEffect } from "react";
 import { Accueil, Clock, Test } from "./components/pages";
-import { Typography } from "./components/atoms";
+import { Container, Icons, Typography } from "./components/atoms";
 import About from "./components/pages/About";
 import Classique from "./components/pages/Classique";
 
@@ -46,6 +46,7 @@ function App() {
   let context = useContext(NightModeContext);
   const [slug, setSlug] = useState("home");
   const [logged, setLogged] = useState(false);
+  const [isDeployed, setIsDeployed] = useState(true);
 
   const getPageContent = () => {
     switch (slug) {
@@ -111,27 +112,37 @@ function App() {
               </Menu.Tab>
             );
           })}
-          <Button.ToggleNight></Button.ToggleNight>
-          {logged ? (
+          <Icons.Setting
+            onClick={() => {
+              setIsDeployed(!isDeployed);
+              console.log(isDeployed);
+            }}
+          ></Icons.Setting>
+          {isDeployed ? (
             <>
-              <Typography.Paragraph>Bonjour Michel</Typography.Paragraph>
-              <Button.Default
-                callBack={() => {
-                  setLogged(false);
-                }}
-              >
-                Disconnect
-              </Button.Default>
+              <Button.ToggleNight></Button.ToggleNight>
+              {logged ? (
+                <>
+                  <Typography.Paragraph>Bonjour Michel</Typography.Paragraph>
+                  <Button.Default
+                    callBack={() => {
+                      setLogged(false);
+                    }}
+                  >
+                    Disconnect
+                  </Button.Default>
+                </>
+              ) : (
+                <Button.Default
+                  callBack={() => {
+                    setLogged(true);
+                  }}
+                >
+                  Login
+                </Button.Default>
+              )}{" "}
             </>
-          ) : (
-            <Button.Default
-              callBack={() => {
-                setLogged(true);
-              }}
-            >
-              Login
-            </Button.Default>
-          )}
+          ) : null}
         </Menu.Bar>
         <Menu.SousMenu>
           {sousMenu.map((x, i) => {
