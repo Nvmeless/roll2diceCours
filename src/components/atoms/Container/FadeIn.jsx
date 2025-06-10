@@ -12,7 +12,6 @@ to {
 
 const FadinComponent = styled.div`
   animation: ${FadeInAnimation} 2s linear infinite;
-  color: black;
 `;
 
 const FadeIn = (props) => {
