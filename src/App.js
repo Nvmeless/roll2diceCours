@@ -92,7 +92,6 @@ function App() {
   ];
 
   return (
-    
     <ThemeProvider theme={nightMode ? nightTheme : dayTheme}>
       <NightModeProvider
         value={{
