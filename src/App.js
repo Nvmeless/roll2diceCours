@@ -10,6 +10,7 @@ import { Accueil, Clock, Test } from "./components/pages";
 import { Container, Icons, Typography } from "./components/atoms";
 import About from "./components/pages/About";
 import Classique from "./components/pages/Classique";
+import Image from "./components/pages/Image";
 
 function App() {
   const nightTheme = {
@@ -55,7 +56,7 @@ function App() {
       case "classique":
         return <Classique></Classique>;
       case "image":
-        return <img src="https://picsum.photos/200/300" alt="random" />;
+        return <Image></Image>;
       case "about":
         return <About></About>;
     }
